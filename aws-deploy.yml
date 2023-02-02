@@ -1,0 +1,24 @@
+region: us-west-1
+prefix: ketsudon_
+
+lambda:
+  alias:
+    - live
+
+functions:
+  main:
+    name: main
+    dir: service/main
+    runtime: nodejs16.x
+    memory: 128
+    timeout: 5
+    iam:
+      - Effect: "Allow"
+        Action: "s3:ListBucket"
+        Resource:
+          - "arn:aws:s3:::images.axel669.net"
+          - "arn:aws:s3:::images.axel669.net/*"
+
+deployment:
+  resources:
+    - "lambda:main"
